@@ -9,14 +9,12 @@ import Row from "react-bootstrap/Row";
 
 export const Ppp = createContext();
 
-export const MobilePhoneList = ({children}) => {
+export const MobilePhoneList = ({ children }) => {
   const [phoneArray, setPhoneArray] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [activeProduct, setActiveProduct] = useState();
   // const [addToCartProduct, setAddToCartProduct] = useState();
   const [cartArray, setCartArray] = useState([]);
-
- 
 
   useEffect(() => {
     axios
@@ -52,10 +50,10 @@ export const MobilePhoneList = ({children}) => {
   }, {});
 
   let totalPrice = 0;
-  totalPrice = cartArray.reduce((cartTotalPrice,product)=>{
+  totalPrice = cartArray.reduce((cartTotalPrice, product) => {
     const price = product.price;
     return cartTotalPrice + price;
-  },0);
+  }, 0);
   console.log("total price", totalPrice);
 
   console.log("cart to diplay", cartToShow);
@@ -95,15 +93,13 @@ export const MobilePhoneList = ({children}) => {
                 phone={phone}
                 onButtonClick={buttonControl}
               />
-             
+
               //    </div>
             );
           })}
         </Row>
         {/* </div> */}
       </Container>
-
-      
 
       <Modal show={activeProduct} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -120,11 +116,9 @@ export const MobilePhoneList = ({children}) => {
         </Modal.Footer>
       </Modal>
 
-<Ppp.Provider value={{cartToShow,totalPrice}}>
-<div>{children}</div>
-
-</Ppp.Provider>
-
+      <Ppp.Provider value={{ cartToShow, totalPrice }}>
+        <div>{children}</div>
+      </Ppp.Provider>
     </>
   );
 };

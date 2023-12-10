@@ -9,7 +9,7 @@ import { useContext, useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
 
 const NavBar = () => {
-    const {cartToShow, totalPrice} = useContext(Ppp);
+ //   const {cartToShow, totalPrice} = useContext(Ppp);
 
     const [showCart, setShowCart] = useState(false);
 
@@ -55,7 +55,7 @@ console.log("show cart", showCart);
         <strong className="me-auto">Bootstrap</strong>
         <small>11 mins ago</small>
       </Toast.Header>
-      <Toast.Body>{cartToShow} Price {totalPrice}</Toast.Body>
+      <Toast.Body> Price </Toast.Body>
     </Toast>
 
         </>
