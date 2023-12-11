@@ -20,7 +20,9 @@ function App() {
       <Route path='/products' element={<MobilePhoneList/>}/>
       <Route path="/homepage" element={<HomePage/>}/>
       <Route path='/contacts' element={<ContactInfo/>}/>
+
       <Route path='/products/:id' element={<ProductDetails/>}/>
+      
       <Route path='/addproduct' element={<AddProduct/>}/>
       <Route path='*' element={<PageNotFound/>}/>
       

@@ -1,15 +1,21 @@
 import axios from "axios";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect} from "react";
 import MobilePhone from "./MobilePhone";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 // import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { useCard } from "./CardProvider";
 
-export const Ppp = createContext();
 
-export const MobilePhoneList = ({ children }) => {
+// export const Ppp = createContext();
+//{children} parametras buvo
+export const MobilePhoneList = () => {
+  const { items, addItem, totalPrice } = useCard();
+
+  console.log("Mobile Items", items);
+
   const [phoneArray, setPhoneArray] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [activeProduct, setActiveProduct] = useState();
@@ -24,7 +30,33 @@ export const MobilePhoneList = ({ children }) => {
         setPhoneArray(data.data.products);
         setIsLoading(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+
+        setPhoneArray([
+          {
+            id: 1,
+            description: "desk 1",
+            price: 100,
+            image: "",
+            images: [
+              ""
+            ]
+          },
+
+          {
+            id: 2,
+            description: "desk 2",
+            price: 200,
+            image: "",
+            images: [
+              ""
+            ]
+          }
+        ]);
+
+        setIsLoading(false);
+      });
   }, []);
 
   const handleClose = () => {
@@ -37,26 +69,27 @@ export const MobilePhoneList = ({ children }) => {
   };
 
   const addToCart = () => {
+    addItem(activeProduct);
     setCartArray([...cartArray, activeProduct]);
   };
   console.log("cart array", cartArray);
 
-  let cartToShow = [];
-  cartToShow = cartArray.reduce((groupedProductsInCart, product) => {
-    const id = product.id;
-    if (groupedProductsInCart[id] == null) groupedProductsInCart[id] = [];
-    groupedProductsInCart[id].push(product);
-    return groupedProductsInCart;
-  }, {});
+ 
+  // const cartToShow = cartArray.reduce((groupedProductsInCart, product) => {
+  //   const id = product.id;
+  //   if (groupedProductsInCart[id] == null) groupedProductsInCart[id] = [];
+  //   groupedProductsInCart[id].push(product);
+  //   return groupedProductsInCart;
+  // }, {});
 
-  let totalPrice = 0;
-  totalPrice = cartArray.reduce((cartTotalPrice, product) => {
-    const price = product.price;
-    return cartTotalPrice + price;
-  }, 0);
-  console.log("total price", totalPrice);
+  
+  // const totalPrice = cartArray.reduce((cartTotalPrice, product) => {
+  //   const price = product.price;
+  //   return cartTotalPrice + price;
+  // }, 0);
+  // console.log("total price", totalPrice);
 
-  console.log("cart to diplay", cartToShow);
+  // console.log("cart to diplay", cartToShow);
   // const addToCart = () => {
   //   setAddToCartProduct(activeProduct);
   //   setActiveProduct(null);
@@ -116,9 +149,9 @@ export const MobilePhoneList = ({ children }) => {
         </Modal.Footer>
       </Modal>
 
-      <Ppp.Provider value={{ cartToShow, totalPrice }}>
+      {/* <Ppp.Provider value={{ cartToShow, totalPrice }}>
         <div>{children}</div>
-      </Ppp.Provider>
+      </Ppp.Provider> */}
     </>
   );
 };
